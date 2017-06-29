@@ -1,0 +1,15 @@
+{
+  "name": "instagram-scraper",
+  "version": "1.0.0",
+  "description": "Basic scraper for Instagram user profile",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tib-tib",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1"
+  }
+}
