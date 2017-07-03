@@ -1,6 +1,6 @@
 {
   "name": "instagram-scraper",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Basic scraper for Instagram user profile",
   "main": "index.js",
   "scripts": {
