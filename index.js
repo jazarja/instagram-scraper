@@ -18,7 +18,7 @@ const getUserPostsRecursive = (userId, after) => {
     const posts = _.map(edges, 'node')
     const hasNext = _.get(postData, 'page_info.has_next_page')
     if (hasNext) {
-      return getUserPostsRecursive(userId, postData.page_info.end_cursor).then(nextPosts => {
+      return getUserPostsRecursive(userId, postData.page_info.end_cursor).delay(5000).then(nextPosts => {
         return posts.concat(nextPosts)
       })
     }
@@ -50,7 +50,7 @@ const getPostCommentsRecursive = (postCode, after) => {
       const comments = _.map(edges, 'node')
       const hasNext = _.get(commentData, 'page_info.has_next_page')
       if (hasNext) {
-        return getPostCommentsRecursive(postCode, commentData.page_info.end_cursor).then(nextComments => {
+        return getPostCommentsRecursive(postCode, commentData.page_info.end_cursor).delay(2000).then(nextComments => {
           return comments.concat(nextComments)
         })
       }
