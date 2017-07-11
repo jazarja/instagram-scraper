@@ -3,18 +3,29 @@ const _ = require('lodash')
 
 const getUserData = username => {
   return request({
-      url: `https://www.instagram.com/${username}/?__a=1`
-  }).then(JSON.parse)
+      uri: `https://www.instagram.com/${username}/`,
+      qs: {
+        __a: 1
+      },
+      timeout: 10000,
+      json: true
+  })
 }
 
 const getUserPostsRecursive = (userId, after) => {
-  const endpoint = `https://www.instagram.com/graphql/query/?query_id=17862015703145017&id=${userId}&first=500&after=${after}`
+  const endpoint = 'https://www.instagram.com/graphql/query/'
   return request({
-      url: endpoint,
-      timeout: 10000
+      uri: endpoint,
+      qs: {
+        query_id: '17862015703145017',
+        id: userId,
+        first: 500,
+        after
+      },
+      timeout: 10000,
+      json: true
   }).then(response => {
-    const parsedResponse = JSON.parse(response)
-    const postData = _.get(parsedResponse, 'data.user.edge_owner_to_timeline_media') || {}
+    const postData = _.get(response, 'data.user.edge_owner_to_timeline_media') || {}
     const edges = postData.edges || []
     const posts = _.map(edges, 'node')
     const hasNext = _.get(postData, 'page_info.has_next_page')
@@ -41,13 +52,19 @@ const getUserPosts = username => {
 }
 
 const getPostCommentsRecursive = (postCode, after) => {
-  const endpoint = `https://www.instagram.com/graphql/query/?query_id=17852405266163336&shortcode=${postCode}&first=1000&after=${after}`
+  const endpoint = 'https://www.instagram.com/graphql/query/'
     return request({
-      url: endpoint,
-      timeout: 10000
+      uri: endpoint,
+      qs: {
+        query_id: '17852405266163336',
+        shortcode: postCode,
+        first: 1000,
+        after
+      },
+      timeout: 10000,
+      json: true
     }).then(response => {
-      const parsedResponse = JSON.parse(response)
-      const commentData = _.get(parsedResponse, 'data.shortcode_media.edge_media_to_comment') || {}
+      const commentData = _.get(response, 'data.shortcode_media.edge_media_to_comment') || {}
       const edges = commentData.edges || []
       const comments = _.map(edges, 'node')
       const hasNext = _.get(commentData, 'page_info.has_next_page')
@@ -62,10 +79,14 @@ const getPostCommentsRecursive = (postCode, after) => {
 
 const getPostComments = postCode => {
   return request({
-      url: `https://www.instagram.com/p/${postCode}/?__a=1`
+      uri: `https://www.instagram.com/p/${postCode}/`,
+      qs: {
+        __a: 1
+      },
+      timeout: 10000,
+      json: true
   }).then(response => {
-    const parsedResponse = JSON.parse(response)
-    const commentsInfo = _.get(parsedResponse, 'graphql.shortcode_media.edge_media_to_comment')
+    const commentsInfo = _.get(response, 'graphql.shortcode_media.edge_media_to_comment')
     const commentEdges = commentsInfo.edges || []
     const comments = _.map(commentEdges, 'node')
 
