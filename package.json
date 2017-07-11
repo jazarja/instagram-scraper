@@ -7,7 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "tib-tib",
-  "license": "ISC",
+  "homepage": "https://github.com/tib-tib/instagram-scraper",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tib-tib/instagram-scraper.git"
+  },
   "dependencies": {
     "lodash": "^4.17.4",
     "request": "^2.81.0",
