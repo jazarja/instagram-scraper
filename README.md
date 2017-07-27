@@ -36,7 +36,9 @@ instagramScraper.getUserPosts('teddysphotos').then(posts => {
 ```
 const instagramScraper = require('instagram-scraper')
 
-instagramScraper.getPostComments('BWD4NjklGAt').then(comments => {
+const postCode = 'BWD4NjklGAt'
+const commentsLimit = 300 // optional parameter to specify how many comments we want to get
+instagramScraper.getPostComments(postCode, commentsLimit).then(comments => {
   console.log('Post comments: ', comments)
 })
 
